@@ -1880,3 +1880,22 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+/* Add this to your CSS file or within a <style> tag in the HTML */
+
+.responsibilities {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 10px; /* Adjust margin to separate from the subheader */
+}
+
+.responsibilities li {
+  margin-bottom: 8px; /* Space between list items */
+}
+
+.responsibilities i {
+  color: green; /* Color for the checkmark */
+  margin-right: 8px; /* Space between checkmark and text */
+}
+
+/* Ensure FontAwesome is loaded for checkmark icon */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
