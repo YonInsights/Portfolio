@@ -285,96 +285,80 @@
             margin-bottom: 15px;
         }
 
-        /* Project Slider */
-        .related-projects {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Project Grid Styles */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
         }
 
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 450px;
-            overflow: hidden;
-            border-radius: 15px;
-            margin-top: 25px;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 12px;
-            cursor: zoom-in;
-        }
-
-        .slide-content {
-            padding: 20px;
+        .project-grid-item {
             background: var(--border-gradient-onyx);
-            border-radius: 12px;
-            margin-top: -20px;
-            position: relative;
-            z-index: 2;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
         }
 
-        .slide-title {
+        .project-grid-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .project-grid-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-grid-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-grid-content {
+            padding: 20px;
+        }
+
+        .project-grid-title {
             color: var(--white-2);
-            font-size: 20px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .project-grid-category {
+            color: var(--vegas-gold);
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
         }
 
-        .slide-title ion-icon {
-            color: var(--vegas-gold);
+        .project-grid-category ion-icon {
+            font-size: 18px;
         }
 
-        .slide-description {
+        .project-grid-description {
             color: var(--white-1);
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
+            margin-top: 12px;
         }
 
-        .slider-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .slider-dot.active {
-            background: var(--vegas-gold);
-            transform: scale(1.2);
+        @media (max-width: 1024px) {
+            .project-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
-            .slider-container {
-                height: 450px;
+            .project-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -426,53 +410,609 @@
             color: var(--eerie-black-1);
         }
 
-        /* Project Grid for Small Images */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+        /* Slider Styles */
+        .project-slider {
+            position: relative;
+            width: 100%;
+            height: 500px;
             margin-top: 30px;
-        }
-
-        .project-grid-item {
-            background: var(--border-gradient-onyx);
-            border-radius: 12px;
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease;
-            cursor: pointer;
         }
 
-        .project-grid-item:hover {
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide.next {
+            transform: translateX(100%);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 65%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .slide:hover .slide-image img {
+            transform: scale(1.05);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.2),
+                rgba(0,0,0,0.8)
+            );
+        }
+
+        .slide-content {
+            background: var(--bg-gradient-onyx);
+            padding: 25px;
+            height: 35%;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+
+        .slide-title {
+            color: var(--white-2);
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slide-title ion-icon {
+            color: var(--vegas-gold);
+            font-size: 28px;
+        }
+
+        .slide-category {
+            color: var(--vegas-gold);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .slide-category ion-icon {
+            font-size: 20px;
+        }
+
+        .slide-description {
+            color: var(--white-1);
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 80%;
+        }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 100;
+            padding: 0 20px;
+        }
+
+        .slider-button {
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .slider-button ion-icon {
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 0 30px;
+        }
+
+        @media (max-width: 768px) {
+            .project-slider {
+                height: 600px;
+            }
+
+            .slide-content {
+                height: 40%;
+            }
+
+            .slide-description {
+                max-width: 100%;
+            }
+        }
+
+        /* Gallery Modal Styles */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-modal.show {
+            opacity: 1;
+        }
+
+        .gallery-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            margin: 2vh auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .gallery-title {
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gallery-close {
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-close:hover {
+            transform: scale(1.1);
+        }
+
+        .gallery-main {
+            position: relative;
+            height: calc(100% - 60px);
+        }
+
+        .gallery-image {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .gallery-arrow {
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .gallery-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .gallery-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+
+        /* Project Slide Styles */
+        .slide {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .slide:hover {
             transform: translateY(-5px);
         }
 
-        .project-grid-item img {
+        .slide-image {
+            position: relative;
             width: 100%;
-            height: 200px;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .slide:hover .slide-image img {
+            transform: scale(1.05);
+        }
+
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide:hover .slide-overlay {
+            opacity: 1;
+        }
+
+        /* Project Gallery Section */
+        .project-gallery {
+            cursor: pointer;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .project-gallery:hover {
+            transform: translateY(-5px);
+        }
+
+        .main-gallery-image {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .project-gallery:hover .main-gallery-image {
+            transform: scale(1.05);
+        }
+
+        .project-gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-gallery:hover .project-gallery-overlay {
+            opacity: 1;
+        }
+
+        .project-gallery-overlay h2 {
+            color: white;
+            margin: 0;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .project-gallery-overlay p {
+            color: white;
+            margin: 10px 0 0;
+            font-size: 1.1em;
+            text-align: center;
+        }
+
+        /* Other Projects Slider Styles */
+        .other-projects {
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .slider-container {
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-item {
+            min-width: 100%;
+            padding: 0 15px;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .slider-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .slider-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .slider-button ion-icon {
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Project Gallery Grid */
+        .gallery-section {
+            margin-bottom: 50px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-title {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .gallery-item-description {
+            font-size: 0.9em;
+            color: #cccccc;
+        }
+
+        /* Update grid layout for 3 items */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        /* Ensure consistent image heights */
+        .gallery-item {
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .project-grid-content {
-            padding: 15px;
+        /* Update slider image consistency */
+        .project-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
         }
 
-        .project-grid-title {
-            color: var(--white-2);
-            font-size: 16px;
-            margin-bottom: 5px;
-            font-weight: 500;
+        /* Update slider styles for smoother transitions */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 0 30px;
         }
 
-        .project-grid-category {
-            color: var(--vegas-gold);
-            font-size: 14px;
+        .slider {
             display: flex;
-            align-items: center;
-            gap: 5px;
+            transition: transform 0.3s ease;
         }
 
-        .project-grid-category ion-icon {
-            font-size: 16px;
+        .slider-item {
+            min-width: 100%;
+            padding: 20px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .project-content h3 {
+            font-size: 1.2em;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .project-content p {
+            color: #cccccc;
         }
     </style>
 </head>
@@ -575,141 +1115,52 @@
                     <ion-icon name="images-outline"></ion-icon>
                     Project Gallery
                 </h2>
-                <div class="gallery">
-                    <div class="gallery-item">
-                        <img src="../assets/images/project-1.jpg" alt="Dashboard Overview">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../assets/images/project-2.jpg" alt="KPI Section">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../assets/images/project-3.jpg" alt="Charts Section">
+                <div class="gallery-section">
+                    <div class="gallery-grid">
+                        <div class="gallery-item" data-project="kpi-dashboard">
+                            <img src="./Images/Key Performance Indicator(KPI).jpg" alt="KPI Dashboard">
+                            <div class="gallery-item-overlay">
+                                <h3 class="gallery-item-title">Key Performance Indicators</h3>
+                                <p class="gallery-item-description">Comprehensive KPI tracking and analysis</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item" data-project="summary-dashboard">
+                            <img src="./Images/Summary.jpg" alt="Summary Dashboard">
+                            <div class="gallery-item-overlay">
+                                <h3 class="gallery-item-title">Summary Dashboard</h3>
+                                <p class="gallery-item-description">Overall loan performance summary</p>
+                            </div>
+                        </div>
+                        <div class="gallery-item" data-project="main-dashboard">
+                            <img src="./Images/Main.png" alt="Main Dashboard">
+                            <div class="gallery-item-overlay">
+                                <h3 class="gallery-item-title">Main Dashboard</h3>
+                                <p class="gallery-item-description">Complete loan portfolio overview</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="related-projects" style="--section-index: 5">
+            <section class="other-projects">
                 <h2 class="section-title">
                     <ion-icon name="albums-outline"></ion-icon>
-                    My Projects
+                    Other Projects
                 </h2>
                 <div class="slider-container">
-                    <div class="slide active">
-                        <img src="../assets/images/finance.jpg" alt="Finance Dashboard" class="zoomable">
-                        <div class="slide-content">
-                            <h3 class="slide-title">
-                                <ion-icon name="cash-outline"></ion-icon>
-                                Finance Dashboard
-                            </h3>
-                            <p class="slide-description">Comprehensive Excel-based financial analysis dashboard with advanced metrics and reporting.</p>
-                        </div>
+                    <div class="slider" id="projectSlider">
+                        <!-- Content will be dynamically inserted by JavaScript -->
                     </div>
-                    <div class="slide">
-                        <img src="../assets/images/pizza-sales.jpg" alt="Pizza Sales Analysis" class="zoomable">
-                        <div class="slide-content">
-                            <h3 class="slide-title">
-                                <ion-icon name="pie-chart-outline"></ion-icon>
-                                Pizza Sales Analysis
-                            </h3>
-                            <p class="slide-description">Tableau dashboard for analyzing pizza sales trends and performance metrics.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="../assets/images/Bank Loan.avif" alt="Bank Loan Dashboard" class="zoomable">
-                        <div class="slide-content">
-                            <h3 class="slide-title">
-                                <ion-icon name="analytics-outline"></ion-icon>
-                                Bank Loan Dashboard
-                            </h3>
-                            <p class="slide-description">Excel-based loan analysis dashboard with risk assessment and KPI tracking.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="../assets/images/road-accident.jpg" alt="Road Accident Analysis" class="zoomable">
-                        <div class="slide-content">
-                            <h3 class="slide-title">
-                                <ion-icon name="car-outline"></ion-icon>
-                                Road Accident Analysis
-                            </h3>
-                            <p class="slide-description">Excel dashboard analyzing road accident patterns and safety metrics.</p>
-                        </div>
+                    <div class="slider-nav">
+                        <button class="slider-button prev">
+                            <ion-icon name="chevron-back-outline"></ion-icon>
+                        </button>
+                        <button class="slider-button next">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                        </button>
                     </div>
                 </div>
-                <div class="slider-nav">
-                    <div class="slider-dot active"></div>
-                    <div class="slider-dot"></div>
-                    <div class="slider-dot"></div>
-                    <div class="slider-dot"></div>
-                </div>
-
-                <!-- Grid View for Other Projects -->
-                <h2 class="section-title" style="margin-top: 50px;">
-                    <ion-icon name="grid-outline"></ion-icon>
-                    More Projects
-                </h2>
-                <div class="project-grid">
-                    <div class="project-grid-item">
-                        <img src="../assets/images/electric-car.jpg" alt="Electric Car Trend" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">Electric Car Trend</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="bar-chart-outline"></ion-icon>
-                                Tableau
-                            </p>
-                        </div>
-                    </div>
-                    <div class="project-grid-item">
-                        <img src="../assets/images/weather.jpg" alt="Weather Condition Analysis" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">Weather Condition Analysis</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="logo-python"></ion-icon>
-                                Python
-                            </p>
-                        </div>
-                    </div>
-                    <div class="project-grid-item">
-                        <img src="../assets/images/running.jpg" alt="Running Analysis" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">Running Analysis</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="logo-python"></ion-icon>
-                                Python
-                            </p>
-                        </div>
-                    </div>
-                    <div class="project-grid-item">
-                        <img src="../assets/images/covid.jpg" alt="COVID-19 Analysis" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">COVID-19 Analysis</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="logo-python"></ion-icon>
-                                Python
-                            </p>
-                        </div>
-                    </div>
-                    <div class="project-grid-item">
-                        <img src="../assets/images/census.jpg" alt="Census Analysis" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">Census Analysis</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="logo-python"></ion-icon>
-                                Python
-                            </p>
-                        </div>
-                    </div>
-                    <div class="project-grid-item">
-                        <img src="../assets/images/housing.jpg" alt="Housing Analysis" class="zoomable">
-                        <div class="project-grid-content">
-                            <h3 class="project-grid-title">Housing Analysis</h3>
-                            <p class="project-grid-category">
-                                <ion-icon name="logo-python"></ion-icon>
-                                Python
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
 
@@ -721,80 +1172,207 @@
         <img id="modalImage" src="" alt="Project Image">
     </div>
 
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        // Automatic Slider
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.slider-dot');
-        let currentSlide = 0;
-        const slideInterval = 10000; // 10 seconds
+    <!-- Gallery Modal -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="gallery-content">
+            <div class="gallery-header">
+                <h3 class="gallery-title">
+                    <ion-icon name="images-outline"></ion-icon>
+                    <span id="galleryProjectTitle">Project Gallery</span>
+                </h3>
+                <div class="gallery-close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="gallery-main">
+                <div class="gallery-image">
+                    <img src="" alt="Project Image" id="mainGalleryImage">
+                </div>
+                <div class="gallery-nav">
+                    <div class="gallery-arrow prev">
+                        <ion-icon name="chevron-back-outline"></ion-icon>
+                    </div>
+                    <div class="gallery-arrow next">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class="gallery-dots"></div>
+            </div>
+        </div>
+    </div>
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Update the slider content
+        const sliderProjects = [
+            { src: '../Slider/Main.png', title: 'Project 1' },
+            { src: '../Slider/Main-1.png', title: 'Project 2' },
+            { src: '../Slider/Main-2.png', title: 'Project 3' },
+            { src: '../Slider/Main-3.png', title: 'Project 4' },
+            { src: '../Slider/Main-4.png', title: 'Project 5' },
+            { src: '../Slider/Main-5.png', title: 'Project 6' },
+            { src: '../Slider/Main-6.png', title: 'Project 7' },
+            { src: '../Slider/Main-7.png', title: 'Project 8' },
+            { src: '../Slider/Main-8.png', title: 'Project 9' },
+            { src: '../Slider/Main-9.png', title: 'Project 10' },
+            { src: '../Slider/Main-10.png', title: 'Project 11' },
+            { src: '../Slider/Main-11.png', title: 'Project 12' },
+            { src: '../Slider/Main-12.png', title: 'Project 13' },
+            { src: '../Slider/Main-13.png', title: 'Project 14' },
+            { src: '../Slider/Main-14.png', title: 'Project 15' },
+            { src: '../Slider/Main-15.png', title: 'Project 16' },
+            { src: '../Slider/Main-16.png', title: 'Project 17' },
+            { src: '../Slider/Main-17.png', title: 'Project 18' },
+            { src: '../Slider/Main-18.png', title: 'Project 19' },
+            { src: '../Slider/Main-19.png', title: 'Project 20' }
+        ];
+
+        // Initialize slider functionality
+        let currentSlide = 0;
+        const totalSlides = sliderProjects.length;
+
+        function updateSliderContent() {
+            const slider = document.getElementById('projectSlider');
+            slider.innerHTML = sliderProjects.map(project => `
+                <div class="slider-item">
+                    <div class="project-card">
+                        <img src="${project.src}" alt="${project.title}">
+                        <div class="project-content">
+                            <h3>${project.title}</h3>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateSlider() {
+            const slider = document.getElementById('projectSlider');
+            const slideWidth = document.querySelector('.slider-item')?.offsetWidth || 0;
+            if (slideWidth > 0) {
+                slider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            }
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
         }
 
-        // Start automatic slideshow
-        let slideTimer = setInterval(nextSlide, slideInterval);
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
 
-        // Add click handlers for dots
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                showSlide(currentSlide);
-                // Reset timer when manually changing slides
-                clearInterval(slideTimer);
-                slideTimer = setInterval(nextSlide, slideInterval);
-            });
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSliderContent();
+            
+            // Add event listeners after content is loaded
+            const prevButton = document.querySelector('.slider-button.prev');
+            const nextButton = document.querySelector('.slider-button.next');
+            
+            prevButton.addEventListener('click', prevSlide);
+            nextButton.addEventListener('click', nextSlide);
+            
+            // Initialize slider
+            setTimeout(updateSlider, 100); // Wait for images to load
+            
+            // Auto-slide
+            setInterval(nextSlide, 3000); // Change slide every 3 seconds
         });
 
-        // Image Modal Functionality
+        // Update slider on window resize
+        window.addEventListener('resize', updateSlider);
+
+        // Update the project data for the gallery
+        const projectData = {
+            'kpi-dashboard': {
+                title: 'Key Performance Indicators (KPI)',
+                image: './Images/Key Performance Indicator(KPI).jpg',
+                description: `
+                    <h4>KPI Dashboard</h4>
+                    <p>Comprehensive KPI tracking and monitoring system:</p>
+                    <ul>
+                        <li>Loan approval rates and trends</li>
+                        <li>Default risk indicators</li>
+                        <li>Portfolio performance metrics</li>
+                        <li>Revenue and profitability tracking</li>
+                    </ul>
+                `
+            },
+            'summary-dashboard': {
+                title: 'Summary Dashboard',
+                image: './Images/Summary.jpg',
+                description: `
+                    <h4>Summary Dashboard</h4>
+                    <p>Complete loan performance summary:</p>
+                    <ul>
+                        <li>Total loans issued and outstanding</li>
+                        <li>Payment collection status</li>
+                        <li>Risk distribution analysis</li>
+                        <li>Performance trends and forecasts</li>
+                    </ul>
+                `
+            },
+            'main-dashboard': {
+                title: 'Main Dashboard',
+                image: './Images/Main.png',
+                description: `
+                    <h4>Main Dashboard</h4>
+                    <p>Comprehensive loan portfolio overview:</p>
+                    <ul>
+                        <li>Portfolio composition</li>
+                        <li>Loan status distribution</li>
+                        <li>Key metrics visualization</li>
+                        <li>Performance indicators</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Modal Elements
         const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const closeBtn = document.querySelector('.modal-close');
-        const zoomableImages = document.querySelectorAll('.zoomable');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.querySelector('.modal-close');
 
-        zoomableImages.forEach(img => {
-            img.addEventListener('click', function() {
+        // Gallery Item Click Handlers
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const projectId = item.dataset.project;
+                const project = projectData[projectId];
+                
+                modalImage.src = project.image;
+                
                 modal.style.display = 'block';
-                modalImg.src = this.src;
-                // Pause the slider when viewing image
-                clearInterval(slideTimer);
+                requestAnimationFrame(() => {
+                    modal.classList.add('show');
+                });
             });
         });
 
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            // Resume the slider when closing image
-            slideTimer = setInterval(nextSlide, slideInterval);
+        // Close Modal
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         });
 
-        modal.addEventListener('click', function(e) {
+        // Close Modal on Background Click
+        modal.addEventListener('click', (e) => {
             if (e.target === modal) {
-                modal.style.display = 'none';
-                // Resume the slider when closing image
-                slideTimer = setInterval(nextSlide, slideInterval);
+                modalClose.click();
             }
         });
 
-        // Add click handlers for grid items
-        const gridItems = document.querySelectorAll('.project-grid-item img');
-        gridItems.forEach(img => {
-            img.addEventListener('click', function() {
-                modal.style.display = 'block';
-                modalImg.src = this.src;
-                // Pause the slider when viewing image
-                clearInterval(slideTimer);
-            });
+        // Keyboard Navigation for Modal
+        document.addEventListener('keydown', (e) => {
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    modalClose.click();
+                }
+            }
         });
     </script>
 </body>
